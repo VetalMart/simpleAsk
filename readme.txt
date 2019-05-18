@@ -23,3 +23,10 @@
 Що потрібно для запуску:
 1. встановити Python за ссилкою:
     https://www.python.org/downloads/
+2. закачать репозиторій за ссилкою:
+    https://github.com/VetalMart/simpleAsk/archive/master.zip
+3. pip install openpyxl, easygui (це якщо по простому)
+3.1 якщо по людськи треба встановить virtualenv, virtualenvwrapper і 
+    потім після цих маніпуляцій встановить із requiremets.txt
+3.2 але потім щоразу для запуску проги, потрібно робить workon - 
+    але це додаткова дія для оператора. А потрібно ?
