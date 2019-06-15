@@ -81,7 +81,7 @@ if xlsx_files_list:
                 ask_number += 1
                 #если лист подходит, копируем информацию
                 #строка
-                raw_info = tuple_unzip(wb_temp[j]["A11":"AL11"])
+                raw_info = tuple_unzip(wb_temp[j]["A11":"AN11"])
                 #фирма
                 organization = wb_temp[j]["C12"].value
                 #мыло
@@ -89,9 +89,9 @@ if xlsx_files_list:
                 #телефон
                 phone = wb_temp[j]["B15"].value
                 #должность
-                occupation = wb_temp[j]["J16"].value
+                occupation = wb_temp[j]["J17"].value
                 #имя должостного лица
-                name = wb_temp[j]["J17"].value
+                name = wb_temp[j]["J16"].value
 
                 # добавляем в главный список
                 datalist[ask_number] = {
@@ -170,6 +170,10 @@ if xlsx_files_list:
                             "model": raw_info[36],
                             "amount": raw_info[37],
                         },
+                        "building": {
+                            "flat": raw_info[38],
+                            "level": raw_info[39],
+                        },
                     },
                     "organization": organization,
                     "email": email,
@@ -203,12 +207,16 @@ for k, v in datalist.items():
     #переименовываем его под номер заявки  
     new_ws.title = str(k)
     new_ws['C11'] = v['organization']
+    new_ws.merge_cells('C11:G11')
     new_ws['B14'] = v['phone']
     new_ws['I11'] = v['email']
+    new_ws.merge_cells('I11:L11')
     new_ws['J15'] = v['name']
+    new_ws.merge_cells('J15:L15')
     new_ws['J16'] = v['occupation']
+    new_ws.merge_cells('J16:L16')
     new_ws['L13'] = str(k)
-    new_ws['L14'] = datetime.today() 
+    new_ws['L14'] = datetime.today().strftime("%d.%m.%Y") 
     new_ws['A10'] = v['raw_info']['date']
     new_ws['B10'] = v['raw_info']['address_region']
     new_ws['C10'] = v['raw_info']['address_city']
@@ -235,10 +243,10 @@ for k, v in datalist.items():
     new_ws['X10'] = v['raw_info']['gas_pipeline']['l_pressure']['vvid']['l']
     new_ws['Y10'] = v['raw_info']['gas_pipeline']['l_pressure']['vvidnyi']['d']
     new_ws['Z10'] = v['raw_info']['gas_pipeline']['l_pressure']['vvidnyi']['l']
-    new_ws['AA10'] = v['raw_info']['regulator']['GRP']['amount']
-    new_ws['AB10'] = v['raw_info']['regulator']['GRP']['type']
-    new_ws['AC10'] = v['raw_info']['regulator']['RT']['amount']
-    new_ws['AD10'] = v['raw_info']['regulator']['RT']['type']
+    new_ws['AA10'] = v['raw_info']['regulator']['GRP']['type']
+    new_ws['AB10'] = v['raw_info']['regulator']['GRP']['amount']
+    new_ws['AC10'] = v['raw_info']['regulator']['RT']['type']
+    new_ws['AD10'] = v['raw_info']['regulator']['RT']['amount']
     new_ws['AE10'] = v['raw_info']['gso']['aim']
     new_ws['AF10'] = v['raw_info']['gso']['info']
     new_ws['AG10'] = v['raw_info']['gso']['gas_consume']
@@ -247,14 +255,16 @@ for k, v in datalist.items():
     new_ws['AJ10'] = v['raw_info']['vog']['amount']
     new_ws['AK10'] = v['raw_info']['korretor']['model']
     new_ws['AL10'] = v['raw_info']['korretor']['amount']
+    new_ws['AM10'] = v['raw_info']['building']['flat']
+    new_ws['AN10'] = v['raw_info']['building']['level']
 
-    new_ws.print_area = 'A1:AL16'
+    new_ws.print_area = 'A1:AN16'
 
     #теперь работаем с прототипом журнала
     rnm += 1
     ws_mag['A{0}'.format(rnm)] = str(k)
     ws_mag['I{0}'.format(rnm)] = str(k)
-    ws_mag['J{0}'.format(rnm)] = datetime.date(datetime.today()) 
+    ws_mag['J{0}'.format(rnm)] = datetime.today().strftime("%d.%m.%Y") 
     ws_mag['C{0}'.format(rnm)] = v['raw_info']['address_region']
     ws_mag['D{0}'.format(rnm)] = v['raw_info']['address_city']
     ws_mag['E{0}'.format(rnm)] = v['raw_info']['address_street']
@@ -280,10 +290,10 @@ for k, v in datalist.items():
     ws_mag['AM{0}'.format(rnm)] = v['raw_info']['gas_pipeline']['l_pressure']['vvid']['l']
     ws_mag['AN{0}'.format(rnm)] = v['raw_info']['gas_pipeline']['l_pressure']['vvidnyi']['d']
     ws_mag['AO{0}'.format(rnm)] = v['raw_info']['gas_pipeline']['l_pressure']['vvidnyi']['l']
-    ws_mag['AP{0}'.format(rnm)] = v['raw_info']['regulator']['GRP']['amount']
-    ws_mag['AQ{0}'.format(rnm)] = v['raw_info']['regulator']['GRP']['type']
-    ws_mag['AR{0}'.format(rnm)] = v['raw_info']['regulator']['RT']['amount']
-    ws_mag['AS{0}'.format(rnm)] = v['raw_info']['regulator']['RT']['type']
+    ws_mag['AP{0}'.format(rnm)] = v['raw_info']['regulator']['GRP']['type']
+    ws_mag['AQ{0}'.format(rnm)] = v['raw_info']['regulator']['GRP']['amount']
+    ws_mag['AR{0}'.format(rnm)] = v['raw_info']['regulator']['RT']['type']
+    ws_mag['AS{0}'.format(rnm)] = v['raw_info']['regulator']['RT']['amount']
     ws_mag['AT{0}'.format(rnm)] = v['raw_info']['gso']['aim']
     ws_mag['AU{0}'.format(rnm)] = v['raw_info']['gso']['info']
     ws_mag['AV{0}'.format(rnm)] = v['raw_info']['gso']['gas_consume']
@@ -292,6 +302,8 @@ for k, v in datalist.items():
     ws_mag['AY{0}'.format(rnm)] = v['raw_info']['vog']['amount']
     ws_mag['AZ{0}'.format(rnm)] = v['raw_info']['korretor']['model']
     ws_mag['BA{0}'.format(rnm)] = v['raw_info']['korretor']['amount']
+    ws_mag['BB{0}'.format(rnm)] = v['raw_info']['building']['flat']
+    ws_mag['BC{0}'.format(rnm)] = v['raw_info']['building']['level']
 
 #сохраняем файлы
 good_data_wb.save('файл_с_заявками.xlsx') 
