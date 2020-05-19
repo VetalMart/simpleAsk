@@ -189,7 +189,7 @@ if xlsx_files_list:
 # выходим с программы
 else:
     print('В папке отсутствуют файлы ексель.')
-    sys.exit()
+    exit()
 
 
 # открываем шаблон для заявок
@@ -218,8 +218,8 @@ for k, v in datalist.items():
     new_ws.merge_cells('J15:L15')
     new_ws['J16'] = v['occupation']
     new_ws.merge_cells('J16:L16')
-    new_ws['L13'] = str(k)
-    new_ws['L14'] = datetime.today().strftime("%d.%m.%Y")
+    new_ws['N13'] = str(k)
+    new_ws['N14'] = datetime.today().strftime("%d.%m.%Y")
     new_ws['A10'] = v['raw_info']['date']
     new_ws['B10'] = v['raw_info']['address_region']
     new_ws['C10'] = v['raw_info']['address_city']
@@ -270,7 +270,7 @@ for k, v in datalist.items():
     # теперь работаем с прототипом журнала
 
     rnm += 1
-    ws_mag['A{0}'.format(rnm)] = str(k)
+    ws_mag['A{0}'.format(rnm)] = int(k)
     
     ws_mag['C{0}'.format(rnm)] = v['raw_info']['address_region']
     ws_mag['D{0}'.format(rnm)] = v['raw_info']['address_city']
@@ -278,44 +278,44 @@ for k, v in datalist.items():
     ws_mag['F{0}'.format(rnm)] = v['raw_info']['address_build']
     ws_mag['G{0}'.format(rnm)] = v['raw_info']['address_flat']
     ws_mag['H{0}'.format(rnm)] = v['raw_info']['mont_org']
-    ws_mag['I{0}'.format(rnm)] = str(k)
+    ws_mag['I{0}'.format(rnm)] = int(k)
     ws_mag['J{0}'.format(rnm)] = datetime.today().strftime("%d.%m.%Y")
     ws_mag['K{0}'.format(rnm)] = v['raw_info']['diop_request']
-    ws_mag['L{0}'.format(rnm)] = v['raw_info']['diop_answer']
+    ws_mag['L{0}'.format(rnm)] = v['raw_info']['diop_answer'].strftime("%d.%m.%Y")
     
-    ws_mag['W{0}'.format(rnm)] = v['raw_info']['tu']
-    ws_mag['X{0}'.format(rnm)] = v['raw_info']['project']
-    ws_mag['Y{0}'.format(rnm)] = v['raw_info']['project_org']
-    ws_mag['Z{0}'.format(rnm)] = v['raw_info']['client']
-    ws_mag['AC{0}'.format(rnm)] = v['raw_info']['aim']
-    ws_mag['AD{0}'.format(rnm)] = vrg['h_pressure']['rozp']['d']['pe']
-    ws_mag['AE{0}'.format(rnm)] = vrg['h_pressure']['rozp']['d']['steel']
-    ws_mag['AF{0}'.format(rnm)] = vrg['h_pressure']['rozp']['l']
-    ws_mag['AG{0}'.format(rnm)] = vrg['h_pressure']['vvid']['d']['pe']
-    ws_mag['AH{0}'.format(rnm)] = vrg['h_pressure']['vvid']['d']['steel']
-    ws_mag['AI{0}'.format(rnm)] = vrg['h_pressure']['vvid']['l']
-    ws_mag['AJ{0}'.format(rnm)] = vrg['l_pressure']['rozp']['d']['pe']
-    ws_mag['AK{0}'.format(rnm)] = vrg['l_pressure']['rozp']['d']['steel']
-    ws_mag['AL{0}'.format(rnm)] = vrg['l_pressure']['rozp']['l']
-    ws_mag['AM{0}'.format(rnm)] = vrg['l_pressure']['vvid']['d']['pe']
-    ws_mag['AN{0}'.format(rnm)] = vrg['l_pressure']['vvid']['d']['steel']
-    ws_mag['AO{0}'.format(rnm)] = vrg['l_pressure']['vvid']['l']
-    ws_mag['AP{0}'.format(rnm)] = vrg['l_pressure']['vvidnyi']['d']
-    ws_mag['AQ{0}'.format(rnm)] = vrg['l_pressure']['vvidnyi']['l']
-    ws_mag['AR{0}'.format(rnm)] = v['raw_info']['regulator']['GRP']['type']
-    ws_mag['AS{0}'.format(rnm)] = v['raw_info']['regulator']['GRP']['amount']
-    ws_mag['AT{0}'.format(rnm)] = v['raw_info']['regulator']['RT']['type']
-    ws_mag['AU{0}'.format(rnm)] = v['raw_info']['regulator']['RT']['amount']
-    ws_mag['AV{0}'.format(rnm)] = v['raw_info']['gso']['aim']
-    ws_mag['AW{0}'.format(rnm)] = v['raw_info']['gso']['info']
-    ws_mag['AX{0}'.format(rnm)] = v['raw_info']['gso']['gas_consume']
-    ws_mag['AY{0}'.format(rnm)] = v['raw_info']['vog']['type']
-    ws_mag['AZ{0}'.format(rnm)] = v['raw_info']['vog']['model']
-    ws_mag['BA{0}'.format(rnm)] = v['raw_info']['vog']['amount']
-    ws_mag['BB{0}'.format(rnm)] = v['raw_info']['korretor']['model']
-    ws_mag['BC{0}'.format(rnm)] = v['raw_info']['korretor']['amount']
-    ws_mag['BD{0}'.format(rnm)] = v['raw_info']['building']['flat']
-    ws_mag['BE{0}'.format(rnm)] = v['raw_info']['building']['level']
+    ws_mag['X{0}'.format(rnm)] = v['raw_info']['tu']
+    ws_mag['Y{0}'.format(rnm)] = v['raw_info']['project'].strftime("%d.%m.%Y")
+    ws_mag['Z{0}'.format(rnm)] = v['raw_info']['project_org']
+    ws_mag['AA{0}'.format(rnm)] = v['raw_info']['client']
+    ws_mag['AD{0}'.format(rnm)] = v['raw_info']['aim']
+    ws_mag['AE{0}'.format(rnm)] = str(vrg['h_pressure']['rozp']['d']['pe'])
+    ws_mag['AF{0}'.format(rnm)] = str(vrg['h_pressure']['rozp']['d']['steel'])
+    ws_mag['AG{0}'.format(rnm)] = str(vrg['h_pressure']['rozp']['l'])
+    ws_mag['AH{0}'.format(rnm)] = str(vrg['h_pressure']['vvid']['d']['pe'])
+    ws_mag['AI{0}'.format(rnm)] = str(vrg['h_pressure']['vvid']['d']['steel'])
+    ws_mag['AJ{0}'.format(rnm)] = str(vrg['h_pressure']['vvid']['l'])
+    ws_mag['AK{0}'.format(rnm)] = str(vrg['l_pressure']['rozp']['d']['pe'])
+    ws_mag['AL{0}'.format(rnm)] = str(vrg['l_pressure']['rozp']['d']['steel'])
+    ws_mag['AM{0}'.format(rnm)] = str(vrg['l_pressure']['rozp']['l'])
+    ws_mag['AN{0}'.format(rnm)] = str(vrg['l_pressure']['vvid']['d']['pe'])
+    ws_mag['AO{0}'.format(rnm)] = str(vrg['l_pressure']['vvid']['d']['steel'])
+    ws_mag['AP{0}'.format(rnm)] = str(vrg['l_pressure']['vvid']['l'])
+    ws_mag['AQ{0}'.format(rnm)] = str(vrg['l_pressure']['vvidnyi']['d'])
+    ws_mag['AR{0}'.format(rnm)] = str(vrg['l_pressure']['vvidnyi']['l'])
+    ws_mag['AS{0}'.format(rnm)] = str(v['raw_info']['regulator']['GRP']['type'])
+    ws_mag['AT{0}'.format(rnm)] = str(v['raw_info']['regulator']['GRP']['amount'])
+    ws_mag['AU{0}'.format(rnm)] = str(v['raw_info']['regulator']['RT']['type'])
+    ws_mag['AV{0}'.format(rnm)] = str(v['raw_info']['regulator']['RT']['amount'])
+    ws_mag['AW{0}'.format(rnm)] = str(v['raw_info']['gso']['aim'])
+    ws_mag['AX{0}'.format(rnm)] = str(v['raw_info']['gso']['info'])
+    ws_mag['AY{0}'.format(rnm)] = str(v['raw_info']['gso']['gas_consume'])
+    ws_mag['AZ{0}'.format(rnm)] = str(v['raw_info']['vog']['type'])
+    ws_mag['BA{0}'.format(rnm)] = str(v['raw_info']['vog']['model'])
+    ws_mag['BB{0}'.format(rnm)] = str(v['raw_info']['vog']['amount'])
+    ws_mag['BC{0}'.format(rnm)] = str(v['raw_info']['korretor']['model'])
+    ws_mag['BD{0}'.format(rnm)] = str(v['raw_info']['korretor']['amount'])
+    ws_mag['BE{0}'.format(rnm)] = str(v['raw_info']['building']['flat'])
+    ws_mag['BF{0}'.format(rnm)] = str(v['raw_info']['building']['level'])
 
 # сохраняем файлы
 good_data_wb.save('файл_с_заявками.xlsx')
